@@ -26,6 +26,24 @@ public class ControllerTests
     }
 
     [Fact]
+    public async Task Start_EmptyEmail_Unauthorized()
+    {
+        var subscriptionService = Substitute.For<ISubscriptionService>();
+        var apiController = new SubscriptionController(subscriptionService)
+        {
+            ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext()
+            }
+        };
+        apiController.ControllerContext.HttpContext.Request.Headers["X-Custom-Auth"] = string.Empty;
+        
+        var response = await apiController.Start();
+
+        Assert.IsType<UnauthorizedResult>(response);
+    }
+    
+    [Fact]
     public async Task Start_AddSubscription_Ok()
     {
         const string testEmail = "jaworowski@gmail.com";
@@ -69,5 +87,84 @@ public class ControllerTests
 
         Assert.IsType<ConflictObjectResult>(response);
     }
+
+    [Fact]
+    public async Task Stop_EmptyHeader_Unauthorized()
+    {
+        var subscriptionService = Substitute.For<ISubscriptionService>();
+        var apiController = new SubscriptionController(subscriptionService)
+        {
+            ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext()
+            }
+        };
+
+        var response = await apiController.Stop();
+
+        Assert.IsType<UnauthorizedResult>(response);   
+    }
+
+    [Fact]
+    public async Task Stop_EmptyEmail_Unauthorized()
+    {
+        var subscriptionService = Substitute.For<ISubscriptionService>();
+        var apiController = new SubscriptionController(subscriptionService)
+        {
+            ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext()
+            }
+        };
+        apiController.ControllerContext.HttpContext.Request.Headers["X-Custom-Auth"] = string.Empty;
+        
+        var response = await apiController.Stop();
+
+        Assert.IsType<UnauthorizedResult>(response);   
+    }
     
+    [Fact]
+    public async Task Stop_CancelSubscription_Ok()
+    {
+        const string testEmail = "jaworowski@gmail.com";
+        
+        var subscriptionService = Substitute.For<ISubscriptionService>();
+        subscriptionService.ExistsAsync(testEmail).Returns(true);
+        subscriptionService.RemoveAsync(testEmail).Returns(true);
+        
+        var apiController = new SubscriptionController(subscriptionService)
+        {
+            ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext()
+            }
+        };
+        apiController.ControllerContext.HttpContext.Request.Headers["X-Custom-Auth"] = testEmail;
+
+        var response = await apiController.Stop();
+
+        Assert.IsType<OkObjectResult>(response);
+    }
+
+    [Fact]
+    public async Task Stop_CancelSubscription_NotFound()
+    {
+        const string testEmail = "jaworowski@gmail.com";
+        
+        var subscriptionService = Substitute.For<ISubscriptionService>();
+        subscriptionService.ExistsAsync(testEmail).Returns(false);
+        
+        var apiController = new SubscriptionController(subscriptionService)
+        {
+            ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext()
+            }
+        };
+        apiController.ControllerContext.HttpContext.Request.Headers["X-Custom-Auth"] = testEmail;
+
+        var response = await apiController.Stop();
+
+        Assert.IsType<NotFoundObjectResult>(response);
+    }
 }

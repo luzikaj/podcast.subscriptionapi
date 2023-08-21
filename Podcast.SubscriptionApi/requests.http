@@ -1,5 +1,6 @@
 POST http://localhost:5151/Subscription/start
-
+X-Custom-Auth: jaworowski+3@gmail.com
 ###
 
 POST http://localhost:5151/Subscription/stop
+X-Custom-Auth: jaworowski+1@gmail.com
