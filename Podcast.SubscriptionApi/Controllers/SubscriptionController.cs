@@ -21,6 +21,8 @@ public class SubscriptionController : ControllerBase
             return Unauthorized();
 
         var email = HttpContext.Request.Headers["X-Custom-Auth"];
+        if (string.IsNullOrEmpty(email))
+            return Unauthorized();
         
         if (await _subService.ExistsAsync(email))
             return Conflict("Subscription already active");
@@ -34,10 +36,17 @@ public class SubscriptionController : ControllerBase
     [HttpPost("stop")]
     public async Task<IActionResult> Stop()
     {
-        if (!await _subService.ExistsAsync(""))
+        if (!HttpContext.Request.Headers.ContainsKey("X-Custom-Auth"))
+            return Unauthorized();
+
+        var email = HttpContext.Request.Headers["X-Custom-Auth"];
+        if (string.IsNullOrEmpty(email))
+            return Unauthorized();
+        
+        if (!await _subService.ExistsAsync(email))
             return NotFound("No subscription active");
         
-        if(await _subService.RemoveAsync(""))
+        if(await _subService.RemoveAsync(email))
             return Ok("Subscription ended");
 
         return BadRequest();

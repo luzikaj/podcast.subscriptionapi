@@ -13,9 +13,7 @@ public class SubscriptionService : ISubscriptionService
     
     public async Task<bool> ExistsAsync(string email)
     {
-        if (_repository.Get(email) != null)
-            return true;
-        return false;
+        return _repository.Get(email) != null;
     }
 
     public async Task<bool> AddAsync(string email)

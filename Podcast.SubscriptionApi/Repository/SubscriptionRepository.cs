@@ -14,7 +14,7 @@ public class SubscriptionRepository : ISubscriptionRepository
 
     public object? Get(string email)
     {
-        return _subscriptions[email];
+        return _subscriptions.TryGetValue(email, out var subscription) ? subscription : null;
     }
 
     public bool Delete(string email)
