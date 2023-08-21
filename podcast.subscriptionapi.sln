@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Podcast.SubscriptionApi", "Podcast.SubscriptionApi\Podcast.SubscriptionApi.csproj", "{CF136CF1-41B0-45D3-B14E-6C02B9A5B2C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Podcast.SubscriptionApi.Tests", "Podcast.SubscriptionApi.Tests\Podcast.SubscriptionApi.Tests.csproj", "{F4A8BF6B-7468-4637-BEEC-BB8407C3EA4A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF136CF1-41B0-45D3-B14E-6C02B9A5B2C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF136CF1-41B0-45D3-B14E-6C02B9A5B2C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF136CF1-41B0-45D3-B14E-6C02B9A5B2C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF136CF1-41B0-45D3-B14E-6C02B9A5B2C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4A8BF6B-7468-4637-BEEC-BB8407C3EA4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4A8BF6B-7468-4637-BEEC-BB8407C3EA4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4A8BF6B-7468-4637-BEEC-BB8407C3EA4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4A8BF6B-7468-4637-BEEC-BB8407C3EA4A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

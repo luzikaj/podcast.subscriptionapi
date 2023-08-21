@@ -17,13 +17,18 @@ public class SubscriptionController : ControllerBase
     [HttpPost("start")]
     public async Task<IActionResult> Start()
     {
-        if (await _subService.ExistsAsync(""))
+        if (!HttpContext.Request.Headers.ContainsKey("X-Custom-Auth"))
+            return Unauthorized();
+
+        var email = HttpContext.Request.Headers["X-Custom-Auth"];
+        
+        if (await _subService.ExistsAsync(email))
             return Conflict("Subscription already active");
         
-        if (await _subService.AddAsync(""))
+        if (await _subService.AddAsync(email))
             return Ok("Subscription started");
 
-        return BadRequest();
+        return NotFound();
     }
 
     [HttpPost("stop")]
